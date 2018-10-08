@@ -12,6 +12,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: "org.springframework.boot"
 apply plugin: 'war'
+apply plugin: 'io.spring.dependency-management'
 
 group 'example'
 version '1.0'
@@ -27,11 +28,19 @@ dependencies {
     // Spring Boot
     compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     compile "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
     testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
     compile "javax.servlet:javax.servlet-api:4.0.1"
+    runtimeOnly('org.postgresql:postgresql')
 }
 
 configurations {
     compile.exclude module: 'spring-boot-starter-tomcat'
     compile.exclude group: 'org.apache.tomcat'
+}
+
+bootWar {
+    manifest {
+        attributes 'Dependencies': 'spiffe'
+    }
 }

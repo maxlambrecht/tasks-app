@@ -1,9 +1,9 @@
 package example;
 
 import example.model.Task;
+import example.model.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -20,12 +19,8 @@ public class TasksController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TasksController.class);
 
-    @Value("${tasks.service}")
-    private String tasksService;
-
     @Autowired
-    private RestTemplate restTemplate;
-
+    private TaskRepository taskRepository;
 
     @RequestMapping("/tasks")
     public String index(Model model) {
@@ -35,9 +30,8 @@ public class TasksController {
 
     @SuppressWarnings("unchecked")
     private List<Task> getTasks() {
-        return restTemplate.getForObject(tasksService, List.class);
+        return taskRepository.findAll();
     }
-
 
     @ExceptionHandler(Exception.class)
     public final ModelAndView handleAllExceptions(Exception ex, WebRequest request) {
