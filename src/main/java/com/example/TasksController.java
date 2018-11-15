@@ -1,7 +1,7 @@
-package example;
+package com.example;
 
-import example.model.Task;
-import example.model.TaskRepository;
+import com.example.model.Task;
+import com.example.model.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

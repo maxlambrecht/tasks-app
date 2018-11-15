@@ -1,5 +1,5 @@
 buildscript {
-    ext.springBootVersion = "2.0.2.RELEASE"
+    ext.springBootVersion = "2.1.0.RELEASE"
 
     repositories {
         mavenCentral()
@@ -11,10 +11,9 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: "org.springframework.boot"
-apply plugin: 'war'
 apply plugin: 'io.spring.dependency-management'
 
-group 'example'
+group 'com.com.example'
 version '2.0'
 
 sourceCompatibility = 1.8
@@ -22,25 +21,15 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
-    // Spring Boot
-    compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
-    compile "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
-    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
-    compile "javax.servlet:javax.servlet-api:4.0.1"
-    runtimeOnly('org.postgresql:postgresql')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+    implementation('com.oracle:ojdbc8:12.2.0.1')
 }
 
-configurations {
-    compile.exclude module: 'spring-boot-starter-tomcat'
-    compile.exclude group: 'org.apache.tomcat'
-}
-
-bootWar {
-    manifest {
-        attributes 'Dependencies': 'spiffe'
-    }
-}
